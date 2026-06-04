@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Impacto Económico Familiar - Panel de Control</title>
+    <link rel="stylesheet" href="css/estile.css">
+</head>
+<body>
+
+    <div class="main-bg-container">
+        <div class="neon-glow-circle circle-1"></div>
+        <div class="neon-glow-circle circle-2"></div>
+    </div>
+
+    <header>
+        <div class="logo-area">
+            <span class="logo-accent">▲</span> MARKETPLACE FOR <span class="highlight">CRISIS SOLUTIONS</span>
+        </div>
+        <h1>SIMULADOR WEB INTERACTIVO</h1>
+        <p>Modelos matemáticos para entender y reducir los efectos de la crisis actual en las familias Bolivianas.</p>
+    </header>
+
+    <main>
+        <section class="dashboard-grid">
+            
+            <article class="simulador-card">
+                <div class="card-image-wrapper">
+                    <img src="img/alimentos.jpg" alt="Canasta familiar de alimentos" class="card-img">
+                 
+                </div>
+                <div class="card-body">
+                    <h2>Precios de Alimentos</h2>
+                    <p>Analiza cuánto han subido los precios de los alimentos y cuánto más gasta cada familia al mes en la canasta básica.</p>
+                    <button class="btn-action pulse-neon" onclick="abrirModal('modal-b')">Calcular Incremento de Alimentos</button>
+                </div>
+            </article>
+
+            <article class="simulador-card">
+                <div class="card-image-wrapper">
+                    <img src="img/bolivia.jpg" alt="Presupuesto y billetera familiar" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h2>Compras Familiares</h2>
+                    <p>Revisa si tu sueldo cubre el costo real de la canasta básica o si terminas gastando más de lo que ganas.</p>
+                    <button class="btn-action pulse-neon" onclick="abrirModal('modal-d')">Verificar Presupuesto </button>
+                </div>
+            </article>
+
+            <article class="simulador-card">
+                <div class="card-image-wrapper">
+                    <img src="img/dinerob.jpg"Pérdida de valor del dinero" class="card-img">
+                
+                </div>
+                <div class="card-body">
+                    <h2>Poder Adquisitivo</h2>
+                    <p>Explica cómo, con la subida de precios en Bolivia, el sueldo alcanza para menos cosas aunque no haya cambiado.</p>
+                    <button class="btn-action pulse-neon" onclick="abrirModal('modal-f')">Analizar Pérdida de Compra</button>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <div id="modal-b" class="modal-overlay">
+        <div class="modal-window">
+            <span class="close-btn" onclick="cerrarModal('modal-b')">&times;</span>
+            <div class="modal-header">
+                <h2>Simulador de Precios de Alimentos</h2>
+                <p>Mide cuánto extra paga tu familia por un producto que subió de precio.</p>
+                <p>Con la crisis de abastecimiento y los bloqueos de carreteras, productos básicos como el pollo, la carne de res y las verduras han subido mucho de precio.</p>
+            </div>
+            <div class="modal-grid">
+                <form id="form-b" class="modal-form">
+                    <div class="form-group">
+                        <label for="b-producto">Nombre del Producto:</label>
+                        <input type="text" id="b-producto" placeholder="Ej. Arroz, Aceite, Papa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-precio-ini">Precio Anterior (Bs):</label>
+                        <input type="number" id="b-precio-ini" min="0" step="0.1" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-precio-act">Precio Actual (Bs):</label>
+                        <input type="number" id="b-precio-act" min="0" step="0.1" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-cantidad">Cantidad Consumida por Semana:</label>
+                        <input type="number" id="b-cantidad" min="0" step="1" placeholder="Cantidad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-semanas">Número de Semanas a Calcular:</label>
+                        <input type="number" id="b-semanas" value="4" min="1" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-submit" onclick="calcularEscenarioB()">Procesar Datos</button>
+                        <button type="reset" class="btn-reset">Limpiar Formulario</button>
+                    </div>
+                </form>
+                <div class="modal-sidebar">
+                    <div class="results-box id-res-b hidden" id="res-b">
+                        <h3>Resultados Calculados</h3>
+                        <div id="output-b"></div>
+                    </div>
+                    <div class="case-study-box">
+                        <h3>Casos de Estudio para Probar</h3>
+                        <table>
+                            <thead>
+                                <tr><th>Producto</th><th>P. Ant.</th><th>P. Act.</th><th>Cant. Mensual</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Arroz</td><td>8 Bs</td><td>11 Bs</td><td>10 unidades</td></tr>
+                                <tr><td>Papa</td><td>7 Bs</td><td>10 Bs</td><td>8 unidades</td></tr>
+                                <tr><td>Aceite</td><td>12 Bs</td><td>18 Bs</td><td>4 unidades</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-d" class="modal-overlay">
+        <div class="modal-window" style="max-width: 1100px;">
+            <span class="close-btn" onclick="cerrarModal('modal-d')">&times;</span>
+            <div class="modal-header">
+                <h2>Simulador de Compras Familiares Avanzado</h2>
+                <p>Haz una lista de lo que compras y revisa cuánto afecta a tu presupuesto de la semana o del mes..</p>
+            </div>
+            <div class="modal-grid">
+                
+                <div class="modal-form">
+                    <div class="form-group">
+                        <label for="d-presupuesto">Presupuesto Familiar Disponible (Bs):</label>
+                        <input type="number" id="d-presupuesto" min="0" step="0.1" placeholder="Ej. 500" oninput="recalcularTodoD()" required>
+                    </div>
+
+                    <fieldset style="border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-top: 10px;">
+                        <legend style="color: #2e7d32; padding: 0 5px; font-size: 0.9rem; font-weight: bold;">Añadir Producto a la Lista</legend>
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label for="d-prod-nombre">Nombre del Producto:</label>
+                            <input type="text" id="d-prod-nombre" placeholder="Ej. Leche, Arroz, Fideo">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group">
+                                <label for="d-prod-precio">Precio Unitario (Bs):</label>
+                                <input type="number" id="d-prod-precio" min="0" step="0.1" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label for="d-prod-cantidad">Cantidad a Comprar:</label>
+                                <input type="number" id="d-prod-cantidad" min="1" step="1" placeholder="1">
+                            </div>
+                        </div>
+                        <button type="button" class="btn-submit" style="margin-top: 15px; padding: 10px; font-size: 0.85rem;" onclick="agregarProductoListaD()">
+                            + Agregar a la Lista
+                        </button>
+                    </fieldset>
+
+                    <div style="margin-top: 15px; max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 5px;">
+                        <table style="margin-top: 0;">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cant.</th>
+                                    <th>Subtotal</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-productos-d">
+                                <tr id="fila-vacia-d"><td colspan="5" style="text-align: center; color: #a3b899; font-style: italic;">No hay productos en la lista</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="case-study-box">
+                        <h3>Casos de Estudio para Probar</h3>
+                        <table>
+                            <thead>
+                                <tr><th>Dato</th><th>Valor</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Presupuesto disponible</td><td>500 Bs</td></tr>
+                                <tr><td>Total de compra</td><td>580 Bs</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="case-study-box">
+                        <h3>Caso de Estudio para Probar</h3>
+                        <p style="font-size: 0.85rem; color: #a3b899; margin-bottom: 10px; line-height: 1.4;">
+                            <strong>Prueba sugerida:</strong> Fije un Presupuesto de <strong>500 Bs</strong>. Luego añada un paquete de carne a 60 Bs (cantidad: 5) y bolsas de leche a 7 Bs (cantidad: 40).
+                        </p>
+                        <p class="expected-text" style="color: #ffffff; opacity: 0.8;">
+                            <strong>Resultado Esperado:</strong> Total de 580 Bs. Mostrará un Monto Faltante de 80 Bs y clasificará el gasto como "Alto / Excede Presupuesto".
+                        </p>
+                    </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-f" class="modal-overlay">
+        <div class="modal-window" style="max-width: 1100px;">
+            <span class="close-btn" onclick="cerrarModal('modal-f')">&times;</span>
+            <div class="modal-header">
+                <h2>Simulador de Pérdida del Poder Adquisitivo Familiar</h2>
+                <p>Mide cómo la subida de precios hace que ahorres menos y vivas con más dificultad cada mes.</p>
+            </div>
+            <div class="modal-grid">
+                
+                <div class="modal-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="f-ingreso">Ingreso Familiar Mensual (Bs):</label>
+                            <input type="number" id="f-ingreso" min="0" step="0.1" placeholder="Ej. 4000" oninput="recalcularTodoF()" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-gasto-anterior">Gasto Mensual Anterior Fijo (Bs):</label>
+                            <input type="number" id="f-gasto-anterior" min="0" step="0.1" placeholder="Ej. 2500" oninput="recalcularTodoF()" required>
+                        </div>
+                    </div>
+
+                    <fieldset style="border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-top: 5px;">
+                        <legend style="color: #2e7d32; padding: 0 5px; font-size: 0.9rem; font-weight: bold;">Precios de Productos Básicos</legend>
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label for="f-prod-nombre">Nombre del Producto de la Canasta:</label>
+                            <input type="text" id="f-prod-nombre" placeholder="Ej. Carne de res, Aceite, Arroz">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group">
+                                <label for="f-prod-precio-ant">Precio Anterior (Bs):</label>
+                                <input type="number" id="f-prod-precio-ant" min="0" step="0.1" placeholder="Antes">
+                            </div>
+                            <div class="form-group">
+                                <label for="f-prod-precio-act">Precio Actual (Bs):</label>
+                                <input type="number" id="f-prod-precio-act" min="0" step="0.1" placeholder="Ahora">
+                            </div>
+                        </div>
+                        <button type="button" class="btn-submit" style="margin-top: 15px; padding: 10px; font-size: 0.85rem;" onclick="agregarProductoF()">
+                            + Registrar Incremento de Producto
+                        </button>
+                    </fieldset>
+
+                    <div style="max-height: 150px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 5px;">
+                        <table style="margin-top: 0;">
+                            <thead>
+                                <tr>
+                                    <th>Producto Bás.</th>
+                                    <th>P. Anterior</th>
+                                    <th>P. Actual</th>
+                                    <th>Subida</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-productos-f">
+                                <tr id="fila-vacia-f"><td colspan="5" style="text-align: center; color: #a3b899; font-style: italic;">No hay variaciones de productos añadidas</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-actions" style="margin-top: 5px;">
+                        <button type="button" class="btn-reset" onclick="limpiarSimuladorF()">Limpiar Simulador</button>
+                    </div>
+                </div>
+
+                <div class="modal-sidebar">
+                    <div class="results-box" id="res-f">
+                        <h3>Salida de Cálculos</h3>
+                        <div id="output-f">
+                            <p style="color: #a3b899;">Registre los ingresos, gastos y la variación de precios para procesar el impacto financiero familiar.</p>
+                        </div>
+                    </div>
+
+                    <div class="case-study-box">
+                        <h3>Caso de Estudio para Probar</h3>
+                        <p style="font-size: 0.85rem; color: #a3b899; margin-bottom: 10px; line-height: 1.4;">
+                            <strong>Prueba sugerida:</strong> Ingreso de <strong>3500 Bs</strong> y Gasto Anterior de <strong>2000 Bs</strong>. Agrega un producto básico cuyo precio subió de 20 Bs a 35 Bs.
+                        </p>
+                        <p class="expected-text">
+                            <strong>Resultado Esperado:</strong> Tu gasto mensual sube, ahorras menos y puedes ver el porcentaje exacto de poder de compra que pierdes.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <section class="footer-container">
+            <div>
+                <h3>Conclusiones Básicas</h3>
+                <p>En este disimulador de casos se muestra cómo incluso pequeñas subidas de precios afectan mucho al bolsillo de la familia Boliviana</p>
+            </div>
+            <p class="credits-text">Desafío Final Programación Web I | Créditos: <strong>Daniela Limachi Condori</strong></p>
+        </section>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
